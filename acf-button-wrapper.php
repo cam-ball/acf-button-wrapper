@@ -36,9 +36,9 @@
    $amazon_url = do_shortcode('[acf field="amazon_link"]', get_the_ID());
 
    if(empty($amazon_url)) {
-     $button_content = "<a class='wp-block-button__link wp-element-button' href='". $amazon_url . "'>". $button_text ."</a>";
+     $button_content = "<span class='wp-block-button__link wp-element-button'>". $button_text ."</span>";
    } else {
-     $button_content = "<div class='wp-block-button__link wp-element-button'>". $button_text ."</div>";
+     $button_content = "<a class='wp-block-button__link wp-element-button' href='". $amazon_url . "'>". $button_text ."</a>";
    }
 
    $content = "<div class='shortcode-button wp-block-button'>\r\n";
