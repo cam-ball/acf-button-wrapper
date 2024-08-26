@@ -34,10 +34,15 @@
    $button_text = shortcode_atts($default_attributes, $atts)['button_text'];
 
    $amazon_url = do_shortcode('[acf field="amazon_link"]', get_the_ID());
-   $amazon_link = "<a class='wp-block-button__link wp-element-button' href='". $amazon_url . "'>". $button_text ."</a>";
+
+   if(empty($amazon_url)) {
+     $button_content = "<a class='wp-block-button__link wp-element-button' href='". $amazon_url . "'>". $button_text ."</a>";
+   } else {
+     $button_content = "<div class='wp-block-button__link wp-element-button'>". $button_text ."</div>";
+   }
 
    $content = "<div class='shortcode-button wp-block-button'>\r\n";
-   $content .= $amazon_link;
+   $content .= $button_content;
    $content .= "</div>";
 	 
    return $content;
