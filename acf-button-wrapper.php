@@ -28,12 +28,24 @@
   */
 
  function create_acf_button($atts) {
-   $default_attributes = array(
-     'button_text' => 'Available Now',
-   );
-   $button_text = shortcode_atts($default_attributes, $atts)['button_text'];
+   $post_id = get_the_ID();
+   $amazon_url = do_shortcode('[acf field="amazon_link"]', $post_id);
+   $release_date_string = do_shortcode('[acf field="release_date"]', $post_id);
 
-   $amazon_url = do_shortcode('[acf field="amazon_link"]', get_the_ID());
+   if(empty($release_date_string)) {
+    $button_text = "Coming Soon";
+   } else {
+     $release_date = DateTime::createFromFormat('m/d/Y', $release_date_string);
+   
+     $is_past = new DateTime() > $release_date;
+
+     if($is_past) {
+       $button_text = "Available Now";
+     } else {
+       $button_text = "Available "
+       $button_text .= $release_date->format('m/d');
+     }
+   }
 
    if(empty($amazon_url)) {
      $button_content = "<span class='wp-block-button__link wp-element-button'>". $button_text ."</span>";
