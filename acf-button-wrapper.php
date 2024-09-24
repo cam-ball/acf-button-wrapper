@@ -27,8 +27,8 @@
   * within a query loop.
   */
 
-function button_text($post_id) {
-   $release_date_string = do_shortcode('[acf field="release_date"]', $post_id);
+function button_text() {
+   $release_date_string = get_field('release_date');
 
    if(empty($release_date_string)) {
     return "Coming Soon";
@@ -43,13 +43,12 @@ function button_text($post_id) {
 }
 
  function create_acf_button($atts) {
-   $post_id = get_the_ID();
-   $amazon_url = do_shortcode('[acf field="amazon_link"]', $post_id);
+   $amazon_url = get_field('amazon_link');
 
    if(empty($amazon_url)) {
-     $button_content = "<span class='wp-block-button__link wp-element-button'>". button_text($post_id) ."</span>";
+     $button_content = "<span class='wp-block-button__link wp-element-button'>". button_text() ."</span>";
    } else {
-     $button_content = "<a class='wp-block-button__link wp-element-button' href='". $amazon_url . "'>". button_text($post_id) ."</a>";
+     $button_content = "<a class='wp-block-button__link wp-element-button' href='". $amazon_url . "'>". button_text() ."</a>";
    }
 
    $content = "<div class='shortcode-button wp-block-button'>\r\n";
